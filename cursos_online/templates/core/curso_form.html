@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h3 class="fw-bold mb-3">{% if form.instance.pk %}Editar Curso{% else %}Novo Curso{% endif %}</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h4 class="fw-bold">Dados do Curso</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6">
+                  {% for field in form %}
+                  <div class="form-group form-group-default">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="card-action text-end mt-4">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-save mr-2"></i> Salvar
+                </button>
+                <a href="{% url 'curso_list' %}" class="btn btn-danger">
+                  <i class="fas fa-times mr-2"></i> Cancelar
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

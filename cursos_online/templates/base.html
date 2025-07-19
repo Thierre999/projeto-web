@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>
+      {% block title %}
+        Cursos Online
+      {% endblock %}
+    </title>
+    <link rel="icon" href="{% static 'assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["{% static 'assets/css/fonts.min.css' %}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      {% if user.is_authenticated %}
+      <div class="sidebar" data-background-color="dark">
+        <div class="Cursos Online">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="{% url 'dashboard' %}" class="logo">
+              <h2 style="color: white;">
+                Cursos Online
+              </h2>
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <a href="{% url 'dashboard' %}">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              
+              {% if request.user.is_superuser %}
+              <li class="nav-item {% if 'usuario' in request.resolver_match.url_name %}active{% endif %}">
+                <a href="{% url 'usuario_list' %}">
+                  <i class="fas fa-users"></i>
+                  <p>Gerenciar Usuários</p>
+                </a>
+              </li>
+              {% endif %}
+
+              <li class="nav-item {% if 'curso' in request.resolver_match.url_name %}active{% endif %}">
+                <a href="{% url 'curso_list' %}">
+                  <i class="fas fa-book"></i>
+                  <p>Cursos</p>
+                </a>
+              </li>
+
+              <li class="nav-item {% if 'aula' in request.resolver_match.url_name %}active{% endif %}">
+                <a href="{% url 'aula_list' %}">
+                  <i class="fas fa-video"></i>
+                  <p>Aulas</p>
+                </a>
+              </li>
+
+           
+
+             <li class="nav-item">
+              <form action="{% url 'logout' %}" method="post" class="d-flex align-items-center w-100">
+                {% csrf_token %}
+                <button type="submit" class="nav-link text-danger bg-transparent border-0 w-100 text-start d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center" style="margin-left: 15px;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p class="mb-0 ms-3">Sair</p>
+                  </div>
+                </button>
+              </form>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="{% url 'dashboard' %}" class="logo">
+                <img
+                  src="{% static 'assets/img/kaiadmin/logo_light.svg' %}"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+            <div class="container-fluid">
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search ..."
+                    class="form-control"
+                  />
+                </div>
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                        />
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="{% static 'assets/img/profile.png' %}"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Olá,</span>
+                      <span class="fw-bold">{{ user.username }}</span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="{% static 'assets/img/profile.png' %}"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text">
+                            <h4>{{ user.username }}</h4>
+                            <p class="text-muted">{{ user.email }}</p>
+                            <a
+                              href="#"
+                              class="btn btn-xs btn-secondary btn-sm"
+                              >Ver Perfil</a
+                            >
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Meu Perfil</a>
+                        <a class="dropdown-item" href="#">Configurações</a>
+                        <div class="dropdown-divider"></div>
+                        <form action="{% url 'logout' %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item">Sair</button>
+                        </form>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <!-- Main Content -->
+        <div class="container">
+          <div class="page-inner">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-between">
+            <nav class="pull-left">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    Cursos Online
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Ajuda </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> Termos </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright">
+              {% now "Y" %}, todos os direitos reservados.
+            </div>
+          </div>
+        </footer>
+      <!-- End Custom template -->
+    <!--   Core JS Files   -->
+    <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{% static 'assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{% static 'assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+    <!-- Datatables -->
+    <script src="{% static 'assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{% static 'assets/js/plugin/jsvectormap/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugin/jsvectormap/world.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+    {% block extra_js %}
+    {% endblock %}
+  </body>
+</html>

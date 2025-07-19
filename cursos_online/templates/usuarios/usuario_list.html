@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuários{% endblock %}
+{% block content %}
+<h2>Usuários</h2>
+<a href="{% url 'usuario_form' %}" class="btn btn-success mb-2">Novo Usuário</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome de Usuario</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for usuario in usuarios %}
+    <tr>
+      <td>{{ usuario.username }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>
+        {% if not usuario.is_superuser %}
+          <a href="{% url 'usuario_update' usuario.id %}" class="btn btn-sm btn-primary">Editar</a>
+          <a href="{% url 'usuario_delete' usuario.id %}" class="btn btn-sm btn-danger">Excluir</a>
+        {% else %}
+          <span class="text-muted">Administrador</span>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+
+</table>
+{% endblock %}

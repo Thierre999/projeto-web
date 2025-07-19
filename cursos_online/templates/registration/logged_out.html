@@ -1,0 +1,25 @@
+{% extends 'login_layout.html' %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title fw-bold mb-0">Sessão encerrada</h4>
+          </div>
+          <div class="card-body text-center">
+            <p>Você saiu da sua conta com sucesso.</p>
+            <div class="d-grid mt-4">
+              <a href="{% url 'login' %}" class="btn btn-primary">Entrar novamente</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

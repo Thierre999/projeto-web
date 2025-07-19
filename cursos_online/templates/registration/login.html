@@ -1,0 +1,39 @@
+{% extends 'login_layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-inner">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title fw-bold mb-0">Entrar na plataforma</h4>
+          </div>
+          <div class="card-body">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="id_username">Usuário</label>
+                <input type="text" name="username" class="form-control" id="id_username" required>
+              </div>
+              <div class="form-group">
+                <label for="id_password">Senha</label>
+                <input type="password" name="password" class="form-control" id="id_password" required>
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <a href="{% url 'register' %}" class="btn btn-link">Criar uma conta</a>
+            <a href="{% url 'password_reset' %}" class="btn btn-link">Esqueceu a senha?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

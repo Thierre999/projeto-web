@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Lista de Aulas</h2>
+  <a href="{% url 'aula_form' %}" class="btn btn-success mb-3">Nova Aula</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Curso</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aula in aulas %}
+      <tr>
+        <td>{{ aula.titulo }}</td>
+        <td>{{ aula.curso.titulo }}</td>
+        <td>
+          <a href="{% url 'aula_edit' aula.pk %}" class="btn btn-sm btn-primary">Editar</a>
+          <a href="{% url 'aula_delete' aula.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">Nenhuma aula cadastrada.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
