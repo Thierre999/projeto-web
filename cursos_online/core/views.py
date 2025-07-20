@@ -1,21 +1,41 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Curso
-from .forms import CursoForm
-from .models import Aula
-from .forms import AulaForm
+from .models import Curso, Aula
+from .forms import CursoForm, AulaForm
 
+# Funções auxiliares
 def is_admin(user):
     return user.is_superuser or user.is_staff
 
+# Views de autenticação e usuário
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        if password1 == password2:
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'As senhas não coincidem')
+    
+    return render(request, 'registration/register.html')
+
 @login_required
-@user_passes_test(is_admin)
+def dashboard(request):
+    return render(request, 'core/dashboard.html')
+
+# Views de gestão de usuários (admin)
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def usuario_list(request):
-    usuarios = User.objects.all()
+    usuarios = User.objects.filter(is_superuser=False)  
     return render(request, 'usuarios/usuario_list.html', {'usuarios': usuarios})
 
 @login_required
@@ -29,12 +49,6 @@ def usuario_create(request):
         messages.success(request, 'Usuário criado com sucesso!')
         return redirect('usuario_list')
     return render(request, 'usuarios/usuario_form.html')
-
-@login_required
-@user_passes_test(lambda u: u.is_superuser)
-def usuario_list(request):
-    usuarios = User.objects.filter(is_superuser=False)  
-    return render(request, 'usuarios/usuario_list.html', {'usuarios': usuarios})
 
 @login_required
 @user_passes_test(is_admin)
@@ -60,31 +74,11 @@ def usuario_delete(request, pk):
         return redirect('usuario_list')
     return render(request, 'usuarios/usuario_confirm_delete.html', {'usuario': user})
 
-@login_required
-def dashboard(request):
-    return render(request, 'core/dashboard.html')
-
-def register(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        
-        if password1 == password2:
-            user = User.objects.create_user(username=username, email=email, password=password1)
-            login(request, user)
-            return redirect('dashboard')
-        else:
-            messages.error(request, 'As senhas não coincidem')
-    
-    return render(request, 'registration/register.html')
-
+# Views de cursos
 @login_required
 def curso_list(request):
     cursos = Curso.objects.all()
     return render(request, 'core/curso_list.html', {'cursos': cursos})
-
 
 @login_required
 def curso_create(request):
@@ -98,7 +92,6 @@ def curso_create(request):
     else:
         form = CursoForm()
     return render(request, 'core/curso_form.html', {'form': form})
-
 
 @login_required
 def curso_edit(request, pk):
@@ -115,7 +108,6 @@ def curso_edit(request, pk):
         form = CursoForm(instance=curso)
     return render(request, 'core/curso_form.html', {'form': form})
 
-
 @login_required
 def curso_delete(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
@@ -127,6 +119,7 @@ def curso_delete(request, pk):
         return redirect('curso_list')
     return render(request, 'core/curso_confirm_delete.html', {'curso': curso})
 
+# Views de aulas
 @login_required
 def aula_list(request):
     aulas = Aula.objects.all()
@@ -162,4 +155,3 @@ def aula_delete(request, pk):
         aula.delete()
         return redirect('aula_list')
     return render(request, 'core/aula_confirm_delete.html', {'aula': aula})
-
