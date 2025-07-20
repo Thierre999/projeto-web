@@ -14,7 +14,7 @@ de gerenciamento de usuários,cursos e aulas.
 
 - **Python**: 3.12.0
 - **Django**: 5.2.4
-- **Bootstrap**: 5 (arquivo local)
+- **Bootstrap**: 5 (arquivo local e CDN)
 - Sistema operacional: Windows 10
 - Navegador: Opera GX
 
