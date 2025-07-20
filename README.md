@@ -26,7 +26,7 @@ https://app.screencastify.com/watch/lR7DxhHNzV78mnCQvK7H
 
 1. Clone o Repositório**:
 
-   git clone [https://github.com/seu-usuario/seu-projeto.git](https://github.com/Thierre999/projeto-web.git)  
+   git clone https://github.com/Thierre999/projeto-web.git  
    cd cursos_online
    
 2. Crie e ative um ambiente virtual:
