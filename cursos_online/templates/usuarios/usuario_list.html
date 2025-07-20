@@ -1,33 +1,49 @@
 {% extends 'base.html' %}
 
-{% block title %}Usuários{% endblock %}
+{% block title %}
+  Usuários
+{% endblock %}
 {% block content %}
-<h2>Usuários</h2>
-<a href="{% url 'usuario_form' %}" class="btn btn-success mb-2">Novo Usuário</a>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nome de Usuario</th>
-      <th>Email</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for usuario in usuarios %}
-    <tr>
-      <td>{{ usuario.username }}</td>
-      <td>{{ usuario.email }}</td>
-      <td>
-        {% if not usuario.is_superuser %}
-          <a href="{% url 'usuario_update' usuario.id %}" class="btn btn-sm btn-primary">Editar</a>
-          <a href="{% url 'usuario_delete' usuario.id %}" class="btn btn-sm btn-danger">Excluir</a>
-        {% else %}
-          <span class="text-muted">Administrador</span>
-        {% endif %}
-      </td>
-    </tr>
-  {% endfor %}
-</tbody>
+  <div class="container">
+    <h2>Usuários</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <a href="{% url 'usuario_form' %}" class="btn btn-success mb-3">Novo Usuário</a>
+    </div>
 
-</table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th data-label="Nome de Usuário">Nome de Usuário</th>
+            <th data-label="Email">Email</th>
+            <th data-label="Ações">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for usuario in usuarios %}
+            <tr>
+              <td data-label="Nome de Usuário">{{ usuario.username }}</td>
+              <td data-label="Email">{{ usuario.email }}</td>
+              <td data-label="Ações">
+                {% if not usuario.is_superuser %}
+                  <div class="table-actions">
+                    <a href="{% url 'usuario_update' usuario.id %}" class="btn btn-sm btn-primary" title="Editar">
+                      <span class="btn-action-text"></span>
+                      <i class="bi bi-pencil-square btn-action-icon"></i>
+                    </a>
+                    <a href="{% url 'usuario_delete' usuario.id %}" class="btn btn-sm btn-danger" title="Excluir">
+                      <span class="btn-action-text"></span>
+                      <i class="bi bi-trash btn-action-icon"></i>
+                    </a>
+                  </div>
+                {% else %}
+                  <span class="text-muted">Administrador</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

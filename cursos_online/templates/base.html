@@ -32,14 +32,18 @@
       });
     </script>
 
-    <!-- CSS Files -->
+    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/plugins.min.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/kaiadmin.min.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/mobile.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 
     {% block extra_head %}
     {% endblock %}
+
+    
   </head>
   <body>
     <div class="wrapper">
@@ -310,6 +314,8 @@
 
     <!-- Kaiadmin JS -->
     <script src="{% static 'assets/js/kaiadmin.min.js' %}"></script>
+
+    
 
     {% block extra_js %}
     {% endblock %}

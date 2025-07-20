@@ -18,7 +18,7 @@
             <form method="post">
               {% csrf_token %}
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-12">  
                   {% for field in form %}
                   <div class="form-group form-group-default">
                     <label>{{ field.label }}</label>
@@ -33,7 +33,7 @@
                   {% endfor %}
                 </div>
               </div>
-              <div class="card-action text-end mt-4">
+              <div class="card-action text-end mt-4 mobile-stack">  
                 <button type="submit" class="btn btn-success">
                   <i class="fas fa-save mr-2"></i> Salvar
                 </button>

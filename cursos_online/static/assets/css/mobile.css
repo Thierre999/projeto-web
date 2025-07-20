@@ -1,0 +1,337 @@
+/* static/css/mobile.css */
+
+/* Estilos gerais para mobile */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  h1, h2, h3, h4, h5 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mb-3, .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Estilos para botões em mobile */
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .btn-sm {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .btn-group {
+    gap: 0.5rem;
+  }
+  
+  .btn-group .btn {
+    flex: 1;
+    min-width: auto;
+  }
+  
+  .btn i {
+    margin-right: 0.3rem;
+  }
+  
+  .btn-success, .btn-primary, .btn-danger, .btn-secondary {
+    color: white;
+  }
+}
+
+/* Estilos para tabelas em mobile */
+@media (max-width: 768px) {
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+  }
+  
+  .table-striped {
+    display: block;
+    width: 100%;
+  }
+  
+  .table-striped thead {
+    display: none;
+  }
+  
+  .table-striped tbody, 
+  .table-striped tr, 
+  .table-striped td {
+    display: block;
+    width: 100%;
+  }
+  
+  .table-striped tr {
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.5rem;
+    position: relative;
+  }
+  
+  .table-striped td {
+    padding: 0.75rem 1rem 0.75rem 50%;
+    position: relative;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .table-striped td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    padding-right: 10px;
+    font-weight: bold;
+    text-align: left;
+    color: #495057;
+  }
+  
+  .table-striped td:last-child {
+    border-bottom: none;
+  }
+  
+  /* Estilos otimizados para botões de ação */
+  .table-striped .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .table-striped .btn-group .btn {
+    padding: 0;
+    min-width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px !important;
+  }
+
+  .table-striped .btn .btn-action-text {
+    display: none !important;
+  }
+  
+  .table-striped .btn .btn-action-icon {
+    display: block !important;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .table-striped .btn .bi {
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  .table-striped .badge {
+    float: right;
+  }
+  
+  .table-striped .text-muted {
+    display: block;
+    text-align: right;
+    padding-right: 0;
+  }
+  
+  .table-striped tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* Estilos específicos para os botões de ação em tabelas */
+@media (max-width: 768px) {
+  .table-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    width: 100%;
+  }
+  
+  .table-actions .btn {
+    min-width: 34px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px !important;
+  }
+  
+  .table-actions .btn .btn-action-text {
+    display: none !important;
+  }
+  
+  .table-actions .btn .btn-action-icon {
+    display: block !important;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .table-actions .btn .bi {
+    font-size: 1.1rem;
+  }
+}
+
+/* Estilos para telas muito pequenas (smartphones pequenos) */
+@media (max-width: 576px) {
+  .card {
+    margin-bottom: 20px;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .card-header {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  .card-title {
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  .mobile-stack {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .mobile-stack .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .mobile-stack .btn:last-child {
+    margin-bottom: 0;
+  }
+  
+  .col-md-6, .col-lg-8 {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Estilos para páginas de confirmação */
+  .confirmation-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .confirmation-actions .btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  .confirmation-actions .btn:last-child {
+    margin-bottom: 0;
+  }
+  
+  .confirmation-actions .btn-danger {
+    order: -1;
+  }
+}
+
+/* Estilos para mensagens e estados */
+@media (max-width: 768px) {
+  .text-center {
+    text-align: center !important;
+  }
+  
+  .text-muted {
+    color: #6c757d !important;
+  }
+  
+  .badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    border-radius: 0.25rem;
+  }
+  
+  .bg-secondary {
+    background-color: #6c757d !important;
+  }
+  
+  .d-none {
+    display: none !important;
+  }
+  
+  .d-md-inline {
+    display: none !important;
+  }
+  
+  .d-md-table-header-group {
+    display: none !important;
+  }
+}
+
+/* Forçar botões menores em mobile */
+@media (max-width: 768px) {
+  button,
+  .btn {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.85rem !important;
+    line-height: 1.2;
+    border-radius: 0.25rem;
+  }
+
+  .btn i {
+    font-size: 1rem;
+  }
+
+  /* Botões com ícone apenas */
+  .btn-icon-only {
+    width: 34px;
+    height: 34px;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Esconde texto de botões em mobile, se necessário */
+  .btn-hide-text {
+    display: none;
+  }
+}
