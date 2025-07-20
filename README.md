@@ -2,7 +2,7 @@
 
 Este projeto é uma plataforma de cursos online desenvolvida com Django, 
 com autenticação de usuários, controle de permissões e funcionalidades 
-de gerenciamento de usuários e conteúdos relacionados.
+de gerenciamento de usuários,cursos e aulas.
 
 ## Funcionalidades
 - Autenticação e autorização de usuários
@@ -15,10 +15,12 @@ de gerenciamento de usuários e conteúdos relacionados.
 - **Python**: 3.12.0
 - **Django**: 5.2.4
 - **Bootstrap**: 5 (arquivo local)
-- Sistema operacional: Windows
+- Sistema operacional: Windows 10
 - Navegador: Opera GX
 
 ## Link para Apresentação
+
+https://app.screencastify.com/watch/lR7DxhHNzV78mnCQvK7H
 
 ## Instalação
 
