@@ -1,5 +1,13 @@
-from django.urls import path
+from django.db import router
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+from . import api_views
+
+router = DefaultRouter()
+router.register(r'cursos', api_views.CursoViewSet, basename='api-curso')
+router.register(r'aulas', api_views.AulaViewSet, basename='api-aula')
+router.register(r'usuarios', api_views.UserViewSet, basename='api-usuario')
 
 urlpatterns = [
     
@@ -21,4 +29,5 @@ urlpatterns = [
     path('aulas/<int:pk>/editar/', views.aula_edit, name='aula_edit'),
     path('aulas/<int:pk>/excluir/', views.aula_delete, name='aula_delete'),
     
+    path('api/', include(router.urls)),
 ]
