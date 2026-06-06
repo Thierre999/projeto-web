@@ -26,7 +26,7 @@ O projeto atende à separação de responsabilidades em dois diretórios princip
 
 ## Como Executar o Projeto
 
-### Parte I: API (Back-end)
+### Parte I: API 
 
 1. Clone o repositório:
    ```bash
@@ -34,7 +34,7 @@ O projeto atende à separação de responsabilidades em dois diretórios princip
 
 2. Acesse a pasta da API:
     ```bash
-    cd projeto-web/api
+    cd projeto-web/cursos_online/api
 3. Crie e ative um ambiente virtual:
     ```bash
     python -m venv venv
@@ -70,7 +70,7 @@ Adicione uma nova aplicação do tipo Confidential com Authorization Grant Type 
 
 Copie o Client ID e o Client Secret reais gerados nesta tela.
 
-## Parte II: Cliente Mobile (Front-end)
+## Parte II: Cliente Mobile
 
 1. Abra um novo terminal e acesse a pasta do cliente:
    ```bash
