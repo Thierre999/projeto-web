@@ -56,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
         final data = json.decode(response.body);
         final String accessToken = data['access_token'];
 
-        // Login efetuado com sucesso! Redireciona para a lista de cursos protegida
         if (mounted) {
           Navigator.pushReplacement(
             context,
@@ -67,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
       } else {
-        print('ERRO DO SERVIDOR: ${response.statusCode} - ${response.body}');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -110,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: _login,
-                    child: const Text('Entrar e Obter Token'),
+                    child: const Text('Entrar'),
                   ),
           ],
         ),
@@ -141,11 +139,8 @@ class _CursosPageState extends State<CursosPage> {
 
   Future<void> _fetchCursos() async {
     try {
-      // Consumindo a rota protegida enviando o token no cabeçalho de Autorização
       final response = await http.get(
-        Uri.parse(
-          '${widget.baseUrl}/api/cursos/',
-        ), // Ajuste de acordo com suas rotas de api_views
+        Uri.parse('${widget.baseUrl}/api/cursos/'),
         headers: {
           'Authorization': 'Bearer ${widget.token}',
           'Content-Type': 'application/json',
@@ -153,9 +148,10 @@ class _CursosPageState extends State<CursosPage> {
       );
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final decodedBody = utf8.decode(response.bodyBytes);
+        final data = json.decode(decodedBody);
+
         setState(() {
-          // Trata se o DRF retornar paginado (com chave 'results') ou lista direta
           _cursos = data is Map ? data['results'] ?? [] : data;
           _isLoading = false;
         });
@@ -175,7 +171,7 @@ class _CursosPageState extends State<CursosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cursos Disponíveis (Rota Protegida)')),
+      appBar: AppBar(title: const Text('Cursos Disponíveis')),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _cursos.isEmpty
@@ -184,12 +180,120 @@ class _CursosPageState extends State<CursosPage> {
               itemCount: _cursos.length,
               itemBuilder: (context, index) {
                 final curso = _cursos[index];
-                return ListTile(
-                  title: Text(curso['titulo'] ?? 'Sem título'),
-                  subtitle: Text(curso['descricao'] ?? 'Sem descrição'),
+
+                final instrutor = curso['instrutor_detalhes'] != null
+                    ? curso['instrutor_detalhes']['username']
+                    : 'Desconhecido';
+
+                final qtdeAulas = curso['aulas'] != null
+                    ? (curso['aulas'] as List).length
+                    : 0;
+
+                return Card(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  elevation: 2,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16),
+                    title: Text(
+                      curso['titulo'] ?? 'Sem título',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        '${curso['descricao']}\n\nInstrutor: $instrutor | Aulas: $qtdeAulas',
+                        style: const TextStyle(height: 1.3),
+                      ),
+                    ),
+                    isThreeLine: true,
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CursoDetalhesPage(curso: curso),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             ),
+    );
+  }
+}
+
+// NOVA TELA: Mostra os detalhes do curso e a lista de aulas
+class CursoDetalhesPage extends StatelessWidget {
+  final Map curso;
+
+  const CursoDetalhesPage({super.key, required this.curso});
+
+  @override
+  Widget build(BuildContext context) {
+    final aulas = curso['aulas'] as List? ?? [];
+
+    return Scaffold(
+      appBar: AppBar(title: Text(curso['titulo'] ?? 'Detalhes do Curso')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Sobre este curso:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              curso['descricao'] ?? 'Sem descrição',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const Divider(height: 32, thickness: 1),
+            Text(
+              'Conteúdo (${aulas.length} aulas):',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: aulas.isEmpty
+                  ? const Center(child: Text('Nenhuma aula cadastrada ainda.'))
+                  : ListView.builder(
+                      itemCount: aulas.length,
+                      itemBuilder: (context, index) {
+                        final aula = aulas[index];
+                        return Card(
+                          color: Colors.blue.shade50,
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.play_circle_fill,
+                              size: 36,
+                              color: Colors.blue,
+                            ),
+                            title: Text(
+                              aula['titulo'] ?? 'Sem título',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(aula['conteudo'] ?? ''),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
